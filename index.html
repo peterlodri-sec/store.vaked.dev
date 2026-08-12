@@ -395,7 +395,14 @@
       <p id="modal-item-price">Select your preferred payment gateway:</p>
       
       <button class="pay-btn stripe-btn" onclick="executePayment('Stripe / Card')">💳 Pay with Stripe / Card</button>
-      <button class="pay-btn eth-btn" onclick="executePayment('Ethereum / WalletConnect')">⚡ Pay with ETH / WalletConnect</button>
+      <button class="pay-btn eth-btn" onclick="payWithEthereum()">⚡ Pay with Ethereum (ETH)</button>
+      <button class="pay-btn sol-btn" style="background:#14f195;color:#000;" onclick="payWithSolana()">☀️ Pay with Solana (SOL)</button>
+      
+      <div style="margin: 1rem 0; padding: 0.75rem; background: rgba(0,0,0,0.4); border-radius: 8px; font-size: 0.75rem; word-break: break-all; text-align: left; color: var(--text-muted);">
+        <div><strong>ETH Receiving Address:</strong> <code style="color:var(--accent-cyan);">0x4f584F6fd3a0a8C807aF2F00571c172603600578</code></div>
+        <div style="margin-top:0.4rem;"><strong>SOL Receiving Address:</strong> <code style="color:var(--accent-gold);">FoStDzbwLqgkw5g7GwSCeD9WpqP9TSrxQ1W2Apn7p9A4</code></div>
+      </div>
+
       <button class="pay-btn close-btn" onclick="closeCheckout()">Cancel</button>
     </div>
   </div>
@@ -411,8 +418,11 @@
   </footer>
 
   <script>
+    const ETH_ADDRESS = "0x4f584F6fd3a0a8C807aF2F00571c172603600578";
+    const SOL_ADDRESS = "FoStDzbwLqgkw5g7GwSCeD9WpqP9TSrxQ1W2Apn7p9A4";
+
     function triggerHonestAuth() {
-      alert("🔑 Honest-Auth Passkey Verified!\n\nUser Identity: 0xp3t3rl.sec\nStatus: VIP Stem & Audio Access Unlocked.");
+      alert("🔑 Honest-Auth Passkey Verified!\n\nUser Identity: 0xp3t3rl.sec\nETH Target: " + ETH_ADDRESS + "\nSOL Target: " + SOL_ADDRESS + "\n\nStatus: VIP Stem & Audio Access Unlocked.");
     }
 
     function openCheckout(title, price) {
@@ -423,6 +433,18 @@
 
     function closeCheckout() {
       document.getElementById("checkout-modal").style.display = "none";
+    }
+
+    function payWithEthereum() {
+      navigator.clipboard.writeText(ETH_ADDRESS);
+      alert("⚡ Ethereum Address Copied to Clipboard!\n\nETH Target: " + ETH_ADDRESS + "\n\nSend payment via MetaMask / Rainbow / WalletConnect.");
+      closeCheckout();
+    }
+
+    function payWithSolana() {
+      navigator.clipboard.writeText(SOL_ADDRESS);
+      alert("☀️ Solana Address Copied to Clipboard!\n\nSOL Target: " + SOL_ADDRESS + "\n\nSend payment via Phantom / Solflare / Backpack.");
+      closeCheckout();
     }
 
     function executePayment(gateway) {
