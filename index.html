@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>store.vaked.dev — Sovereign Art, Audio & Calligraphy Store</title>
+  <meta name="description" content="Sovereign Storefront for 4K/8K Archival Calligraphy Prints, 24-bit Lossless Audio Bundles, and On-Demand Vinyl Records. Authenticated via Honest-Auth.">
+  <meta name="theme-color" content="#04070d">
+  
+  <style>
+    :root {
+      --bg: #04070d;
+      --card-bg: rgba(12, 16, 26, 0.85);
+      --border: rgba(98, 230, 201, 0.2);
+      --accent-cyan: #62e6c9;
+      --accent-gold: #ffcf5c;
+      --accent-purple: #b48bff;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    header {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(4, 7, 13, 0.9);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(98, 230, 201, 0.1);
+      color: var(--accent-cyan);
+      border: 1px solid var(--border);
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .auth-banner {
+      margin: 1.5rem auto 0;
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      background: rgba(180, 139, 255, 0.1);
+      border: 1px solid rgba(180, 139, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 680px;
+      font-size: 0.875rem;
+    }
+
+    .auth-btn {
+      background: var(--accent-purple);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      padding: 0.4rem 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .auth-btn:hover { transform: scale(1.04); }
+
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .product-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-4px);
+    }
+
+    .img-container {
+      width: 100%;
+      height: 240px;
+      background: #0b0f19;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .category {
+      font-size: 0.75rem;
+      color: var(--accent-gold);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 1rem;
+    }
+
+    .price {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent-cyan);
+    }
+
+    .buy-btn {
+      background: rgba(98, 230, 201, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid var(--accent-cyan);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .buy-btn:hover {
+      background: var(--accent-cyan);
+      color: #000;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: rgba(4, 7, 13, 0.95);
+    }
+
+    .links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .links a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--accent-cyan);
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-card h2 { margin-bottom: 0.5rem; color: #fff; }
+    .modal-card p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+    .pay-btn {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 0.75rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    .stripe-btn { background: #635bff; color: #fff; }
+    .eth-btn { background: #3c3c3d; color: #fff; border: 1px solid #627eea; }
+    .close-btn { background: transparent; color: var(--text-muted); border: 1px solid rgba(255, 255, 255, 0.2); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">Sovereign E-Commerce Engine</div>
+    <h1>store.vaked.dev</h1>
+    <p class="subtitle">Archival 8K Calligraphy Prints, 24-Bit Lossless Audio Masters & On-Demand Vinyl Records.</p>
+
+    <div class="auth-banner">
+      <span>🔑 <strong>Honest-Auth Key:</strong> Connect your passkey to unlock VIP audio stems & discounts.</span>
+      <button class="auth-btn" onclick="triggerHonestAuth()">Connect Key</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid">
+
+      <!-- Product 1 -->
+      <article class="product-card">
+        <div class="img-container">
+          <svg viewBox="0 0 400 300" style="width:100%;height:100%;background:#080c14;">
+            <circle cx="200" cy="150" r="80" fill="none" stroke="#ffcf5c" stroke-width="3"/>
+            <text x="200" y="165" text-anchor="middle" font-family="serif" font-size="72" fill="#ffcf5c">氣</text>
+          </svg>
+        </div>
+        <div class="content">
+          <div class="category">Archival Print</div>
+          <h2 class="title">Qì (氣) Seal 8K Archival Print</h2>
+          <p class="desc">Limited 8K resolution Giclée archival print on cotton rag paper, signed with calligraphic Qì seal & digital ERC-721 Certificate of Authenticity.</p>
+          <div class="footer-row">
+            <span class="price">$120 / 0.04 ETH</span>
+            <button class="buy-btn" onclick="openCheckout('Qì (氣) Seal 8K Archival Print', '$120')">Purchase Print</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 2 -->
+      <article class="product-card">
+        <div class="img-container">
+          <svg viewBox="0 0 400 300" style="width:100%;height:100%;background:#04070d;">
+            <polygon points="200,50 320,250 80,250" fill="none" stroke="#62e6c9" stroke-width="3"/>
+            <circle cx="200" cy="160" r="30" fill="#b48bff" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="content">
+          <div class="category">Lossless Master Bundle</div>
+          <h2 class="title">SZAMÁR MADÁR Master Audio Bundle</h2>
+          <p class="desc">Complete 24-bit 96kHz FLAC, Opus 512k, MP3 320k, 4K MP4 Visualizer & full uncompressed WAV multitrack stems.</p>
+          <div class="footer-row">
+            <span class="price">$15 / 0.005 ETH</span>
+            <button class="buy-btn" onclick="openCheckout('SZAMÁR MADÁR Master Audio Bundle', '$15')">Get Audio Bundle</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 3 -->
+      <article class="product-card">
+        <div class="img-container">
+          <svg viewBox="0 0 400 300" style="width:100%;height:100%;background:#0c0a14;">
+            <circle cx="200" cy="150" r="110" fill="#111" stroke="#ffcf5c" stroke-width="4"/>
+            <circle cx="200" cy="150" r="40" fill="#b48bff"/>
+            <circle cx="200" cy="150" r="10" fill="#000"/>
+          </svg>
+        </div>
+        <div class="content">
+          <div class="category">Vinyl On-Demand</div>
+          <h2 class="title">12" 180g Gatefold Vinyl LP</h2>
+          <p class="desc">Heavyweight 180g Audiophile Black Vinyl record in gatefold artwork jacket. Cut directly from 24-bit uncompressed master WAVs.</p>
+          <div class="footer-row">
+            <span class="price">$38 / 0.012 ETH</span>
+            <button class="buy-btn" onclick="openCheckout('12&quot; 180g Gatefold Vinyl LP', '$38')">Order Vinyl</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 4 -->
+      <article class="product-card">
+        <div class="img-container">
+          <svg viewBox="0 0 400 300" style="width:100%;height:100%;background:#05070a;">
+            <rect x="80" y="70" width="240" height="160" rx="12" fill="none" stroke="#62e6c9" stroke-width="2.5"/>
+            <text x="200" y="160" text-anchor="middle" font-family="monospace" font-size="28" fill="#62e6c9">👾 8BIT-WRAITH</text>
+          </svg>
+        </div>
+        <div class="content">
+          <div class="category">Artist Collaboration</div>
+          <h2 class="title">8bit-wraith Collab Stems & Presets</h2>
+          <p class="desc">Exclusive collaborative synth patches, 8-bit chip tunes, and raw multi-track audio stems created with brother & inspiration 8bit-wraith.</p>
+          <div class="footer-row">
+            <span class="price">$25 / 0.008 ETH</span>
+            <button class="buy-btn" onclick="openCheckout('8bit-wraith Collab Stems', '$25')">Unlock Stems</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="modal-overlay">
+    <div class="modal-card">
+      <h2 id="modal-item-title">Purchase Asset</h2>
+      <p id="modal-item-price">Select your preferred payment gateway:</p>
+      
+      <button class="pay-btn stripe-btn" onclick="executePayment('Stripe / Card')">💳 Pay with Stripe / Card</button>
+      <button class="pay-btn eth-btn" onclick="executePayment('Ethereum / WalletConnect')">⚡ Pay with ETH / WalletConnect</button>
+      <button class="pay-btn close-btn" onclick="closeCheckout()">Cancel</button>
+    </div>
+  </div>
+
+  <footer>
+    <div>store.vaked.dev · Sovereign E-Commerce Node · vaked.dev constellation</div>
+    <div class="links">
+      <a href="https://art.vaked.dev/" target="_blank">art.vaked.dev</a> ·
+      <a href="https://music.vaked.dev/" target="_blank">music.vaked.dev</a> ·
+      <a href="https://patreon.com/peterlodri" target="_blank">Patreon</a> ·
+      <a href="https://soundcloud.com/peterlodri" target="_blank">SoundCloud</a>
+    </div>
+  </footer>
+
+  <script>
+    function triggerHonestAuth() {
+      alert("🔑 Honest-Auth Passkey Verified!\n\nUser Identity: 0xp3t3rl.sec\nStatus: VIP Stem & Audio Access Unlocked.");
+    }
+
+    function openCheckout(title, price) {
+      document.getElementById("modal-item-title").innerText = title;
+      document.getElementById("modal-item-price").innerText = "Price: " + price + " — Select Payment Method:";
+      document.getElementById("checkout-modal").style.display = "flex";
+    }
+
+    function closeCheckout() {
+      document.getElementById("checkout-modal").style.display = "none";
+    }
+
+    function executePayment(gateway) {
+      alert("🎉 Payment Initiated via " + gateway + "!\n\nYour digital download links & vinyl tracking order will be bound to your email.");
+      closeCheckout();
+    }
+  </script>
+</body>
+</html>
