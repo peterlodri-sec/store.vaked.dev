@@ -7,6 +7,58 @@
   <meta name="description" content="Sovereign Storefront for 4K/8K Archival Calligraphy Prints, 24-bit Lossless Audio Bundles, and On-Demand Vinyl Records. Authenticated via Honest-Auth.">
   <meta name="theme-color" content="#04070d">
   
+  <!-- OpenGraph & Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://store.vaked.dev">
+  <meta property="og:title" content="store.vaked.dev — Sovereign Art, Audio & Calligraphy Store">
+  <meta property="og:description" content="Sovereign Storefront for Archival 8K Calligraphy Prints, Stanley/Stella Apparel, 24-bit Lossless Audio Bundles, and On-Demand Vinyl Records.">
+  <meta property="og:image" content="https://store-vaked-dev.pages.dev/assets/creator_tshirt_mockup_1786538936658.jpg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="store.vaked.dev — Sovereign Storefront Node">
+  <meta name="twitter:description" content="Sovereign E-Commerce for Stanley/Stella Streetwear, 8K Prints, Lossless Audio & Vinyl Records.">
+  <meta name="twitter:image" content="https://store-vaked-dev.pages.dev/assets/creator_tshirt_mockup_1786538936658.jpg">
+
+  <!-- JSON-LD Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "store.vaked.dev",
+    "url": "https://store.vaked.dev",
+    "description": "Sovereign Storefront for Archival 8K Calligraphy Prints, Stanley/Stella Apparel, 24-bit Lossless Audio Bundles, and On-Demand Vinyl Records.",
+    "currenciesAccepted": "USD, ETH, SOL",
+    "paymentAccepted": "Credit Card, Ethereum, Solana",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Sovereign Asset Catalog",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Qì (氣) Cybernetic Creator 2.0 T-Shirt",
+            "image": "https://store-vaked-dev.pages.dev/assets/creator_tshirt_mockup_1786538936658.jpg",
+            "description": "100% Organic Combed Cotton (180 gsm) black t-shirt printed with high-contrast DTF cyan & gold Qì seal artwork.",
+            "offers": { "@type": "Offer", "price": "35.00", "priceCurrency": "USD" }
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "SZAMÁR MADÁR Heavy Cruiser Hoodie",
+            "image": "https://store-vaked-dev.pages.dev/assets/cruiser_hoodie_mockup_1786538952245.jpg",
+            "description": "Heavyweight 350 gsm organic cotton pullover hoodie featuring vibrant gold & emerald 145 BPM Hungarian Folk polyrhythm emblem artwork.",
+            "offers": { "@type": "Offer", "price": "75.00", "priceCurrency": "USD" }
+          }
+        }
+      ]
+    }
+  }
+  </script>
+  
   <style>
     :root {
       --bg: #04070d;
@@ -20,6 +72,11 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    *:focus-visible {
+      outline: 2px solid var(--accent-cyan);
+      outline-offset: 3px;
+    }
 
     body {
       background-color: var(--bg);

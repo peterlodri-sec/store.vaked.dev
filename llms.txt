@@ -1,0 +1,21 @@
+# store.vaked.dev — Sovereign E-Commerce Storefront Node
+
+> `store.vaked.dev` is the official storefront node of the vaked.dev constellation. It sells 8K archival Giclée calligraphy prints, 24-bit 96kHz lossless audio master bundles, and 180g audiophile vinyl records.
+
+## Products & Offerings
+- **Qì (氣) Cybernetic Creator 2.0 T-Shirt**: 100% Organic Combed Cotton (180 gsm) black t-shirt printed with high-contrast DTF cyan & gold Qì seal artwork ($35 / 0.011 ETH).
+- **SZAMÁR MADÁR Heavy Cruiser Hoodie**: Heavyweight 350 gsm organic cotton pullover hoodie featuring vibrant gold & emerald 145 BPM Hungarian Folk polyrhythm emblem artwork ($75 / 0.024 ETH).
+- **12" 180g Audiophile Gatefold Vinyl LP**: Heavyweight 180g Audiophile Black Vinyl record in gatefold artwork jacket ($38 / 0.012 ETH).
+- **Qì (氣) Seal 8K Archival Gallery Print**: Framed 8K resolution Giclée archival print on cotton rag paper, signed with calligraphic seal & digital ERC-721 Certificate of Authenticity ($120 / 0.04 ETH).
+- **SZAMÁR MADÁR Master Audio Bundle**: Complete 24-bit 96kHz FLAC, Opus 512k, MP3 320k, 4K MP4 Visualizer & full uncompressed WAV multitrack stems ($15 / 0.005 ETH).
+- **8bit-wraith Collab Stems & Presets**: Exclusive collaborative synth patches, 8-bit chip tunes, and raw multi-track audio stems created with brother & inspiration 8bit-wraith ($25 / 0.008 ETH).
+
+## Payment & Authentication
+- **Ethereum Wallet**: `0x4f584F6fd3a0a8C807aF2F00571c172603600578`
+- **Solana Wallet**: `FoStDzbwLqgkw5g7GwSCeD9WpqP9TSrxQ1W2Apn7p9A4`
+- **Authentication**: Honest-Auth Passkey identity verification (`0xp3t3rl.sec`).
+
+## Sister Sites
+- [art.vaked.dev](https://art.vaked.dev) — Visual Art Node
+- [music.vaked.dev](https://music.vaked.dev) — Living Sound Node
+- [store.vaked.dev](https://store.vaked.dev) — Sovereign Storefront Node

@@ -1,0 +1,26 @@
+# robots.txt for store.vaked.dev — vaked.dev constellation
+User-agent: *
+Allow: /
+Disallow: /scratch/
+Disallow: /admin/
+
+# Disallow AI scrapers & training bots
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+Sitemap: https://store.vaked.dev/sitemap.xml
