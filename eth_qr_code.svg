@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <rect width="300" height="300" fill="#0b0f19" rx="16"/>
+  <rect x="20" y="20" width="260" height="260" fill="none" stroke="#62e6c9" stroke-width="2" rx="12"/>
+  <text x="150" y="60" text-anchor="middle" fill="#62e6c9" font-family="monospace" font-size="16" font-weight="bold">WEB3 PAYMENT</text>
+  <rect x="70" y="80" width="160" height="160" fill="#020408" stroke="#38ef7d" stroke-width="1.5" rx="8"/>
+  <text x="150" y="165" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="28">⚡ 1-TAP</text>
+  <text x="150" y="265" text-anchor="middle" fill="#a59fc4" font-family="monospace" font-size="10">0x4f584F6fd3a0a8C8...</text>
+</svg>
