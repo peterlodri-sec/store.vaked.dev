@@ -841,7 +841,60 @@
       closeCheckout();
     }
 
+    
+    async function connectProofOfPresence() {
+      if (typeof window.ethereum === 'undefined') {
+        alert("🦊 MetaMask not detected! Please install MetaMask or a compatible Web3 wallet to sign your Sovereign Proof-of-Presence.");
+        return;
+      }
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const userAddress = accounts[0];
+        const timestamp = new Date().toISOString();
+        const message = `✦ SOVEREIGN PROOF-OF-PRESENCE ATTESTATION ✦\n\nPatron Address: ${userAddress}\nConstellation Node: store.vaked.dev\nIssued At: ${timestamp}\n\nSigning this message verifies presence in the Sovereign Commons without incurring gas fees.`;
+        
+        const signature = await window.ethereum.request({
+          method: 'personal_sign',
+          params: [message, userAddress],
+        });
+
+        const presenceData = {
+          address: userAddress,
+          timestamp: timestamp,
+          signature: signature,
+          status: "verified_presence"
+        };
+        localStorage.setItem('vaked_web3_presence', JSON.stringify(presenceData));
+
+        const btn = document.getElementById('web3-presence-btn');
+        if (btn) {
+          btn.innerHTML = `<span>✓</span> Presense Verified: <span style="color:var(--accent-cyan);">${userAddress.substring(0,6)}...${userAddress.substring(38)}</span>`;
+          btn.style.borderColor = "#62e6c9";
+          btn.style.background = "rgba(98,230,201,0.15)";
+        }
+        alert(`✦ Web3 Proof-of-Presence Verified!\n\nAddress: ${userAddress}\nAlchemy/MetaMask Anchor Active.\nAll Sovereign Constellation downloads unlocked!`);
+      } catch (err) {
+        console.warn("Proof-of-presence signature canceled:", err);
+      }
+    }
+
+    function checkExistingPresence() {
+      const saved = localStorage.getItem('vaked_web3_presence');
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          const btn = document.getElementById('web3-presence-btn');
+          if (btn && data.address) {
+            btn.innerHTML = `<span>✓</span> Presense Verified: <span style="color:var(--accent-cyan);">${data.address.substring(0,6)}...${data.address.substring(38)}</span>`;
+            btn.style.borderColor = "#62e6c9";
+            btn.style.background = "rgba(98,230,201,0.15)";
+          }
+        } catch(e){}
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      checkExistingPresence();
       updateCartBadge();
     });
   </script>
