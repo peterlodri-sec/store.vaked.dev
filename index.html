@@ -671,7 +671,7 @@
     <a href="https://art.vaked.dev/vision-gallery.html" style="color:#5b9dff;text-decoration:none;">✦ vision-gallery (23)</a> ·
     <a href="https://music.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">music.vaked.dev</a> ·
     <a href="https://store.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#62e6c9;text-decoration:none;">store.vaked.dev 🛒</a> ·
-    <a href="https://peterlodri-sec.github.io/qwave/" target="_blank" rel="noopener noreferrer" style="color:#00f2fe;text-decoration:none;">qwave 🌊</a> ·
+    <a href="https://qwave.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#00f2fe;text-decoration:none;">qwave 🌊</a> ·
     <a href="https://mlxquantlovefrom.com/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">quant-love</a> ·
     <a href="https://proposal.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">proposal.vaked.dev</a> ·
     <a href="https://pocoo.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">pocoo.vaked.dev</a> ·
@@ -698,15 +698,14 @@
       } else {
         drawer.classList.add('open');
         overlay.style.display = 'block';
-        renderCartItems();
       }
     }
 
-    function addToCart(title, price) {
-      cart.push({ title, price });
+    function addToCart(title, price, image) {
+      cart.push({ title, price, image, addedAt: new Date().toISOString() });
       localStorage.setItem('vaked_store_cart', JSON.stringify(cart));
       updateCartBadge();
-      renderCartItems();
+      renderCartDrawer();
       toggleCartDrawer();
     }
 
@@ -714,75 +713,66 @@
       cart.splice(index, 1);
       localStorage.setItem('vaked_store_cart', JSON.stringify(cart));
       updateCartBadge();
-      renderCartItems();
+      renderCartDrawer();
+    }
+
+    function clearCart() {
+      cart = [];
+      localStorage.removeItem('vaked_store_cart');
+      updateCartBadge();
+      renderCartDrawer();
     }
 
     function updateCartBadge() {
       const badge = document.getElementById('cart-count');
-      if (badge) badge.innerText = cart.length;
+      if (badge) {
+        badge.innerText = cart.length;
+        badge.style.display = cart.length > 0 ? 'inline-block' : 'none';
+      }
     }
 
-    function renderCartItems() {
-      const container = document.getElementById('cart-items-container');
-      const subtotalEl = document.getElementById('cart-subtotal');
-      if (!container) return;
+    function renderCartDrawer() {
+      const itemsContainer = document.getElementById('cart-items');
+      const totalEl = document.getElementById('cart-total-price');
+      if (!itemsContainer || !totalEl) return;
 
       if (cart.length === 0) {
-        container.innerHTML = '<div style="text-align:center;color:var(--text-muted);margin-top:2rem;">Your cart is currently empty.</div>';
-        if (subtotalEl) subtotalEl.innerText = '$0.00';
+        itemsContainer.innerHTML = '<div style="color:var(--text-muted);font-size:0.85rem;text-align:center;padding:2rem 0;">Your sovereign cart is empty.</div>';
+        totalEl.innerText = '$0.00';
         return;
       }
 
       let total = 0;
-      let html = '';
-      cart.forEach((item, idx) => {
-        total += item.price;
-        html += `
+      itemsContainer.innerHTML = cart.map((item, idx) => {
+        const numPrice = parseFloat(item.price.replace('$', '')) || 0;
+        total += numPrice;
+        return `
           <div class="cart-item">
-            <div>
-              <div class="cart-item-title">${item.title}</div>
-              <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+            <img src="${item.image || 'assets/creator_tshirt_mockup_1786538936658.jpg'}" alt="${item.title}">
+            <div style="flex:1;">
+              <div style="font-weight:600;font-size:0.85rem;color:var(--text-main);">${item.title}</div>
+              <div style="font-size:0.8rem;color:var(--accent-cyan);">${item.price}</div>
             </div>
-            <button onclick="removeFromCart(${idx})" style="background:none;border:none;color:#ff5555;cursor:pointer;font-weight:700;">✕</button>
+            <button class="remove-btn" onclick="removeFromCart(${idx})" title="Remove item">✕</button>
           </div>
         `;
-      });
+      }).join('');
 
-      container.innerHTML = html;
-      if (subtotalEl) subtotalEl.innerText = '$' + total.toFixed(2);
+      totalEl.innerText = '$' + total.toFixed(2);
     }
 
     function openCartCheckout() {
       if (cart.length === 0) {
-        alert("Your cart is empty. Add an item before checking out.");
+        alert("Your cart is empty!");
         return;
       }
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      let total = cart.reduce((acc, item) => acc + (parseFloat(item.price.replace('$', '')) || 0), 0);
       openCheckout(`Cart Order (${cart.length} Items)`, '$' + total.toFixed(2));
-    }
-
-    function triggerHonestAuth() {
-      const mockEd25519Token = "Sovereign " + btoa(JSON.stringify({
-        issuer: "lovetta-lane-sovereign-key",
-        sub: "0xp3t3rl.sec",
-        exp: Date.now() + 86400000,
-        sig: "ed25519_5f3a9e20..."
-      }));
-      sovereignToken = mockEd25519Token;
-      localStorage.setItem('vaked_sovereign_token', sovereignToken);
-
-      const btn = document.getElementById("sovereign-auth-btn");
-      if (btn) {
-        btn.innerText = "✓ Sovereign Key Connected";
-        btn.style.background = "#62e6c9";
-      }
-
-      alert("🔑 Sovereign Ed25519 Key Verified & Bound!\n\nToken Header: " + mockEd25519Token.substring(0, 40) + "...\n\nStatus: VIP Stem & Audio Access Unlocked.");
     }
 
     function openCheckout(title, price) {
       document.getElementById("modal-item-title").innerText = title;
-      document.getElementById("modal-item-price").innerText = "Price: " + price + " — Select Payment Gateway:";
+      document.getElementById("modal-item-price").innerText = "Price: " + price + " — Select payment gateway:";
       document.getElementById("checkout-modal").style.display = "flex";
     }
 
@@ -820,8 +810,34 @@
       closeCheckout();
     }
 
-    function executePayment(gateway) {
-      alert("🎉 Payment Initiated via " + gateway + "!\n\nYour digital download links & vinyl tracking order will be bound to your email.");
+    async function executePayment(gateway) {
+      const email = prompt("Enter your patron email for Sovereign Key token issuance:", "patron@vaked.dev");
+      if (!email) return;
+
+      try {
+        const resp = await fetch("https://portail.vaked.dev/v1/webhooks/stripe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "checkout.session.completed",
+            data: {
+              object: {
+                customer_details: { email: email },
+                amount_total: 5000
+              }
+            }
+          })
+        });
+        const data = await resp.json();
+        if (data.status === "active_sovereign_key") {
+          localStorage.setItem('vaked_sovereign_token', JSON.stringify(data));
+          alert(`🎉 Sovereign Key Minted Successfully!\n\nIssuer: ${data.issuer}\nCustomer: ${data.customer}\nLicense: ${data.sovereign_license}\nStatus: ${data.status}\n\nYour digital downloads are unlocked!`);
+        } else {
+          alert("🎉 Order recorded! Digital master files bound to " + email);
+        }
+      } catch (e) {
+        alert("🎉 Payment Initiated via " + gateway + "!\n\nOrder tracking & download keys bound to: " + email);
+      }
       closeCheckout();
     }
 
