@@ -877,6 +877,9 @@
         });
         const data = await resp.json();
         if (resp.ok && data && data.url) {
+          // Persist which order shape this was so the return flow can clear
+          // exactly what was charged (a direct BUY must not wipe the cart).
+          localStorage.setItem('vaked_pending_order', directCheckoutItem ? 'direct' : 'cart');
           // Redirect to the hosted Stripe Checkout session (email + card are
           // collected there). On success Stripe bounces back to
           // ?checkout=<session_id> where claimSovereignKeyOnReturn() picks up.
@@ -910,11 +913,16 @@
             if (data && data.key) {
               // Sovereign token is a plain vkd_sk_... string, not JSON.
               localStorage.setItem('vaked_sovereign_token', data.key);
-              // Purchase confirmed — clear the cart + direct-item state so a
-              // later checkout never re-submits (and re-charges) this order.
-              cart = [];
-              localStorage.removeItem('vaked_store_cart');
+              // Clear exactly what this order charged: a cart order clears the
+              // cart; a direct BUY clears only the direct-item state and leaves
+              // unrelated cart contents untouched.
+              const orderType = localStorage.getItem('vaked_pending_order');
+              if (orderType === 'cart') {
+                cart = [];
+                localStorage.removeItem('vaked_store_cart');
+              }
               directCheckoutItem = null;
+              localStorage.removeItem('vaked_pending_order');
               updateCartBadge();
               renderCartDrawer();
               showSovereignKeyClaimed(data.key);
@@ -931,7 +939,14 @@
         if (attempts < maxAttempts) {
           setTimeout(poll, 3000);
         } else {
-          alert("Your order is processing! Check back at /back/claim for your Sovereign Key.");
+          // Fulfillment is taking longer than expected. Keep the ?checkout=
+          // session id in the URL and offer an in-page retry — there is no
+          // separate /back/claim page on this site, and losing the session id
+          // would strand the key.
+          if (confirm("Your order is still processing. Retry claiming your Sovereign Key now?")) {
+            attempts = 0;
+            poll();
+          }
         }
       };
 
