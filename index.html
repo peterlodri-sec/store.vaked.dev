@@ -957,6 +957,9 @@
       const params = new URLSearchParams(window.location.search);
       const sessionId = params.get('checkout');
       if (!sessionId) return;
+      // Second factor: the buyer's email (must match the license record).
+      const email = prompt('Enter the email you used at checkout to claim your Sovereign Key:');
+      if (!email) return; // cancelled — the ?checkout= id stays for a later retry
 
       const maxAttempts = 10;
       let attempts = 0;
@@ -964,7 +967,7 @@
       const poll = async () => {
         attempts += 1;
         try {
-          const resp = await fetch("https://entheai.com/api/license/claim?session_id=" + encodeURIComponent(sessionId));
+          const resp = await fetch("https://entheai.com/api/license/claim?session_id=" + encodeURIComponent(sessionId) + "&email=" + encodeURIComponent(email));
           if (resp.ok) {
             const data = await resp.json();
             if (data && data.key) {
