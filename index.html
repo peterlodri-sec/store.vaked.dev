@@ -696,7 +696,32 @@
         </div>
       </div>
 
-      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.35rem;">
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:1.35rem;">
+        <!-- Subscription 0: OmniCooker Family Hearth Pass (Ma / Dra / Trisha / Alex) -->
+        <article class="product-card" style="border-color:rgba(244,63,94,0.6);box-shadow:0 0 28px rgba(244,63,94,0.16);">
+          <div class="img-container" style="height:175px;">
+            <svg viewBox="0 0 400 220" style="width:100%;height:100%;background:radial-gradient(circle at 30% 25%,#3b0d1e,#05070e 80%);">
+              <rect x="24" y="24" width="352" height="172" rx="14" fill="none" stroke="#fb7185" stroke-width="2.2"/>
+              <text x="200" y="78" text-anchor="middle" font-family="monospace" font-size="12" fill="#ffcf5c" letter-spacing="3">TIER 00 · #1 FAMILY HEARTH PASS</text>
+              <text x="200" y="118" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="19" fill="#fb7185">🍲 OmniCooker v2.2.0</text>
+              <text x="200" y="150" text-anchor="middle" font-family="monospace" font-size="13" fill="#e2e8f0">Ma · Dra · Trisha · Alex · Air Fryer Auto-Route</text>
+              <text x="200" y="178" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="15" fill="#ffffff">$4.99 / MONTH</text>
+            </svg>
+          </div>
+          <div class="content">
+            <div class="category">Family Kitchen, Pantry &amp; Grocery Pass · Monthly</div>
+            <h2 class="title">8b-is OmniCooker (zenUltraCooker v2.2.0) Family Pass</h2>
+            <p class="desc">Built for Ma, Dra, Trisha &amp; Alex: Wall Oven offline → Air Fryer auto-routing, 15+ food &amp; household inventory alerts, and Medina OH 44256 store price comparator.</p>
+            <div class="footer-row">
+              <span class="price">$4.99/mo · €4.99/mo</span>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <button class="buy-btn" onclick="addToCart('OmniCooker Family Hearth Monthly Subscription', 4.99)">+ CART</button>
+                <button class="buy-btn" style="background:#fb7185;color:#000;" onclick="buyNow('OmniCooker Family Hearth Monthly Subscription', '$4.99/mo')">SUBSCRIBE</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
         <!-- Subscription 1: Smart-Tree + Headroom + MEM|8 Pro -->
         <article class="product-card" style="border-color:rgba(98,230,201,0.45);">
           <div class="img-container" style="height:175px;">
@@ -1150,6 +1175,13 @@
     // Matched on lowercase title substrings, in order. "exclude" keeps a generic
     // match from stealing a more specific product (e.g. the MRA hoodie).
     const SKU_MAP = [
+      { patterns: ['omnicooker', 'zenultracooker'], sku: 'sub-omnicooker-family', fallbackSku: 'sub-lovetta-postcard' },
+      { patterns: ['crabcc'], sku: 'sub-crabcc-pro', fallbackSku: 'sub-smart-tree-pro' },
+      { patterns: ['zeno pocket cfo', 'dra ceo helper'], sku: 'sub-zeno-cfo', fallbackSku: 'audio-bundle' },
+      { patterns: ['memnet', 'lovetta'], sku: 'sub-memnet-patron', fallbackSku: 'sub-lovetta-postcard' },
+      { patterns: ['exegesis'], sku: 'sub-exegesis-scholar', fallbackSku: 'sub-smart-tree-pro' },
+      { patterns: ['spherepop'], sku: 'sub-spherepop-warrant', fallbackSku: 'nfc-card' },
+      { patterns: ['cloak-fetch', 'fieldfeed'], sku: 'sub-cloak-shield', fallbackSku: 'sub-lovetta-postcard' },
       { patterns: ['smart-tree + mem|8', 'smart-tree + headroom'], sku: 'sub-smart-tree-pro', fallbackSku: 'stems' },
       { patterns: ['portail + entheai', 'swarm monthly'], sku: 'sub-portail-swarm', fallbackSku: 'vakedide-supporter' },
       { patterns: ['axiomquant', 'transformers-ultra'], sku: 'sub-axiomquant-ultra', fallbackSku: 'print' },
